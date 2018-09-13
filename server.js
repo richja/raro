@@ -1,12 +1,8 @@
 const fastify = require('fastify')()
-const fs = require('fs')
-const random = require('random')
+const raro = require('./raro.js')
 
 const PORT = process.env.PORT || 3000;
 
-const pathToLists = 'lists/'
-
-// Declare a route
 fastify.get('/', async (request, reply) => {
     return 'hello world'
     // TODO display here available list and simple example how to use it including slack
@@ -14,7 +10,11 @@ fastify.get('/', async (request, reply) => {
 
 fastify.get('/random/:listName', (request, reply) => {
     // TODO sanitize the input and do whitelisting based on available lists
-    getList(request.params.listName, reply)
+    raro.getRandomItem(request.params.listName, (data) => {
+        const listArray = raro.parseListToArray(data)
+        const pickedItem = raro.selectRandomItem(listArray)
+        reply.send(pickedItem)
+    })
 })
 
 // Run the server!
@@ -29,29 +29,3 @@ const start = async () => {
     }
 }
 start()
-
-function getList(fileName, reply) {
-    let foldedFileName = pathToLists + fileName + '.txt'
-    console.log(foldedFileName)
-    fs.readFile(foldedFileName, 'utf8', function(err, contents) {
-        if (err) {
-            console.log(err)
-            throw err
-        }
-
-        parseListToArray(contents, reply)
-    })
-}
-
-function parseListToArray(list, reply) {
-    listAsArray = list.split('\n')
-    console.log(listAsArray);
-    selectRandomAndSend(listAsArray, reply)
-}
-
-function selectRandomAndSend(arrayList, reply) {
-    randomInt = random.int(min = 0, max = --arrayList.length)
-    console.log(randomInt)
-    console.log(arrayList[randomInt])
-    reply.send(arrayList[randomInt])
-}
