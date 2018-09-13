@@ -20,7 +20,7 @@ fastify.get('/random/:listName', (request, reply) => {
 // Run the server!
 const start = async () => {
     try {
-        await fastify.listen(PORT, '127.0.0.1')
+        await fastify.listen(PORT, '0.0.0.0')
         // fastify.log.info(`server listening on ${fastify.server.address().port}`)
         console.log(`server listening on ${fastify.server.address().address + ':' + fastify.server.address().port}`)
     } catch (err) {
