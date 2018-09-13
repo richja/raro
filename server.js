@@ -44,7 +44,7 @@ function getList(fileName, reply) {
 }
 
 function parseListToArray(list, reply) {
-    listAsArray = list.split('\r\n')
+    listAsArray = list.split('\n')
     console.log(listAsArray);
     selectRandomAndSend(listAsArray, reply)
 }
