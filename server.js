@@ -14,7 +14,7 @@ fastify.get('/', async (request, reply) => {
 
 fastify.get('/random/:listName', (request, reply) => {
     // TODO sanitize the input and do whitelisting based on available lists
-    let list = getList(request.params.listName, reply)
+    getList(request.params.listName, reply)
 })
 
 // Run the server!
@@ -39,17 +39,19 @@ function getList(fileName, reply) {
             throw err
         }
 
-        console.log(contents);
         parseListToArray(contents, reply)
     })
 }
 
 function parseListToArray(list, reply) {
     listAsArray = list.split('\r\n')
+    console.log(listAsArray);
     selectRandomAndSend(listAsArray, reply)
 }
 
 function selectRandomAndSend(arrayList, reply) {
     randomInt = random.int(min = 0, max = --arrayList.length)
+    console.log(randomInt)
+    console.log(arrayList[randomInt])
     reply.send(arrayList[randomInt])
 }
