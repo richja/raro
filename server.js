@@ -32,10 +32,14 @@ start()
 
 function getList(fileName, reply) {
     let foldedFileName = pathToLists + fileName + '.txt'
-
+    console.log(foldedFileName)
     fs.readFile(foldedFileName, 'utf8', function(err, contents) {
-        if (err) throw err
+        if (err) {
+            console.log(err)
+            throw err
+        }
 
+        console.log(contents);
         parseListToArray(contents, reply)
     })
 }
