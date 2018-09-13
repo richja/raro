@@ -4,7 +4,7 @@ const random = require('random')
 
 const PORT = process.env.PORT || 3000;
 
-const pathToLists = './lists/'
+const pathToLists = 'lists/'
 
 // Declare a route
 fastify.get('/', async (request, reply) => {
@@ -20,7 +20,7 @@ fastify.get('/random/:listName', (request, reply) => {
 // Run the server!
 const start = async () => {
     try {
-        await fastify.listen(PORT, '0.0.0.0')
+        await fastify.listen(PORT, '127.0.0.1')
         // fastify.log.info(`server listening on ${fastify.server.address().port}`)
         console.log(`server listening on ${fastify.server.address().address + ':' + fastify.server.address().port}`)
     } catch (err) {
