@@ -1,5 +1,6 @@
 const fastify = require('fastify')()
 const raro = require('./raro.js')
+const imageSearch = require('first-image-search-load')
 
 fastify.register(require('point-of-view'), {
     engine: {
@@ -37,6 +38,7 @@ function getSimpleRandomRouteHandler(request, reply) {
     raro.getRandomItem(request.params.listName, (data) => {
         const listArray = raro.parseListToArray(data)
         const pickedItem = raro.selectRandomItem(listArray)
+        let imageUrl = false
 
         switch (getTemplateType(request.params.format)) {
             case 'day':
@@ -44,10 +46,16 @@ function getSimpleRandomRouteHandler(request, reply) {
                 reply.send(pickedItem)
                 break
             default:
-                reply.view('simple.hbs', {
-                    item: pickedItem,
-                    listName: request.params.listName,
-                    listSize: listArray.length
+                //try to get an image from google images search to the view
+                imageSearch.getFirstImageURL(pickedItem).then((result) => {
+                    imageUrl = result
+                }).finally((result) => {
+                    reply.view('simple.hbs', {
+                        item: pickedItem,
+                        listName: request.params.listName,
+                        listSize: listArray.length,
+                        image: imageUrl
+                    })
                 })
         }
     })

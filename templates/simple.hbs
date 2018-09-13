@@ -7,6 +7,9 @@
     <meta property="og:title" content="{{item}}">
     <meta property="og:description" content="{{item}} is randomly picked from the list of {{listSize}} {{listName}}, hit refresh and see next one!">
     <meta property="og:type" content="website">
+    {{#if image}}
+    <meta property="og:image" content="{{image}}" />
+    {{/if}}
     <meta name="twitter:label1" value="Item" />
     <meta name="twitter:data1" value="{{item}}" />
     <meta name="twitter:label2" value="List" />
