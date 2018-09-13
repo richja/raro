@@ -12,7 +12,7 @@ module.exports = {
                 console.log(err)
                 throw err
             }
-            callback(contents);
+            callback(contents)
         })
     },
     parseListToArray: function (list) {
@@ -24,4 +24,4 @@ module.exports = {
         let randomInt = random.int(min = 0, max = --arrayList.length)
         return arrayList[randomInt]
     }
-};
+}

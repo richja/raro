@@ -5,6 +5,8 @@
   "main": "server.js",
   "dependencies": {
     "fastify": "^1.11.2",
+    "handlebars": "^4.0.12",
+    "point-of-view": "^1.3.0",
     "random": "^2.0.12"
   },
   "devDependencies": {},
